@@ -17,10 +17,17 @@
 <script>
 // @ is an alias to /src
 
+let commonBtn = {
+  data () {
+    return {
+      msg2 : '这是一个mixin'
+    }
+  }
+}
+
 export default {
   name: 'home',
   components: {
-    // HelloWorld
   },
   props:[
     'msg',

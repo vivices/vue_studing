@@ -1,29 +1,39 @@
 <template>
   <div id="app">
-    <h1>{{title}}</h1>
-    <!-- <span :value="textValue"></span> -->
+  
     <!-- <h1>{{msg}}</h1> -->
-    <ul>
-      <li v-for="(value , key , index) in student" :key="value">{{index + 1}} - {{key}} : {{value}}</li>
-    </ul>
-    <br>
-    <span>{{followSonInput}}</span>
-    <hr>
-    <Home msg="xiaoxi" @changeTitle="changeTitle" @input="input">
-      <!-- 插槽 -->
-      <h1 slot="header">头部插槽</h1>
-      <span>默认内容插槽</span>
-      <h3 slot="footer">底部插槽</h3>
-    </Home>
+    <div class="frame">
+      <h1>{{title}}</h1>
+      <ul>
+        <li v-for="(value , key , index) in student" :key="value">{{index + 1}} - {{key}} : {{value}}</li>
+      </ul>
+      <br>
+      <span>{{followSonInput}}</span>
+    </div>
 
     <hr>
-    <h1>is在tab页切换中的使用</h1>
-    <!-- is在tab页切换中的使用 -->
-    <button class="tab1" @click="clickTab" data-role="Tab1">tab1</button>
-    <button class="tab2" @click="clickTab" data-role="Tab2">tab2</button>
-    <keep-alive>
-      <div class="tabFrame" :is="currentTab"></div>
-    </keep-alive>
+    
+    <div class="frame">
+      <Home msg="xiaoxi" @changeTitle="changeTitle" @input="input">
+        <!-- 插槽 -->
+        <h1 slot="header">头部插槽</h1>
+        <span>默认内容插槽</span>
+        <h3 slot="footer">底部插槽</h3>
+      </Home>
+    </div>
+
+    <hr>
+
+    <div class="frame">
+      <h1>is在tab页切换中的使用</h1>
+      <!-- is在tab页切换中的使用 -->
+      <button class="tab1" @click="clickTab" data-role="Tab1">tab1</button>
+      <button class="tab2" @click="clickTab" data-role="Tab2">tab2</button>
+      <keep-alive>
+        <div class="tabFrame" :is="currentTab"></div>
+      </keep-alive>
+    </div>
+
     <hr>
 
   </div>
@@ -32,9 +42,8 @@
 <script>
 
 import Home from '@/views/Home.vue'
-import Tab1 from '@/views/Tab1.vue'
-import Tab2 from '@/views/Tab2.vue'
-
+import Tab1 from '@/components/Tab1.vue'
+import Tab2 from '@/components/Tab2.vue'
 
 // let i = 1 ;
 export default {
@@ -42,7 +51,7 @@ export default {
     components:{
       Home,
       Tab1,
-      Tab2
+      Tab2,
     },
     data () {
       return {
@@ -61,9 +70,15 @@ export default {
         currentTab:'Tab1'
       }
     },
+    computed : {
+      reversedMessage () {
+        return this.msg.split('').reverse().join('')
+      }
+    },
     methods: {
       changeTitle (i) {
         this.title = '父组件 ' + i + 'times';
+        console.log(this.title);
       },
       input (e) {
         this.followSonInput = e;
@@ -71,38 +86,30 @@ export default {
       clickTab (e) {
         this.currentTab = e.currentTarget.dataset.role
       }
-      // changeSpan () {
-      //   textValue = 
-      // }
-      // handleOpen(key, keyPath) {
-      //   console.log(key, keyPath);
-      // },
-      // handleClose(key, keyPath) {
-      //   console.log(key, keyPath);
-      // }
     },
     created () {
       console.log([...this.arr,...this.arr1,...this.arr2])
       console.log(Object.prototype.toString.call(...this.arr))
+    },
+    provide () {
+      return {
+        changeTitle : this.changeTitle
+      }
     }
 }
 </script>
 
 
 <style scoped lang="less">
-/* #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-.el-header, .el-footer {
-  background-color: #B3C0D1;
-  color: #333;
-  text-align: center;
-  line-height: 60px;
-} */
+  #app{
+    padding: 10px;
+  }
+  .frame{
+    padding-left: 20px;
+  }
+  li{
+    list-style:none;
+  }
   .tab1,.tab2{
     cursor: pointer;
     background-color: #fff;

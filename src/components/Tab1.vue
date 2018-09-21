@@ -8,15 +8,15 @@
         </ul>
       </div>
 	  <keep-alive>
-		  <div class="right" :is="currentList"></div>
+		  <div class="right" :is="currentList" ref="listName"></div>
 	  </keep-alive>
 	</div>
 </template>
 
 <script>
-import List1 from '@/views/List1.vue'
-import List2 from '@/views/List2.vue'
-import List3 from '@/views/List3.vue'
+import List1 from '@/components/List1.vue'
+import List2 from '@/components/List2.vue'
+import List3 from '@/components/List3.vue'
 
 export default {
 	name:'Tab1',
@@ -32,7 +32,8 @@ export default {
 	},
 	methods : {
       clickList (e) {
-        this.currentList = e.currentTarget.dataset.role
+        this.currentList = e.currentTarget.dataset.role;
+        console.log('点击的tab对应的list元素',this.$refs.listName)
       }
 	}
 }
@@ -53,7 +54,6 @@ export default {
         flex-direction: column;
         justify-content: space-between;
         li{
-          list-style:none;
           text-align: center;
           cursor: pointer;
         }
