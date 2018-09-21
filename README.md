@@ -1,4 +1,4 @@
-# backstage
+# vue studing
 
 ## Project setup
 ```
