@@ -1,25 +1,43 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import About from './views/About.vue'
 import Home from './views/Home.vue'
 
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
-  base: process.env.BASE_URL,
+  // mode: 'history',
+  // base: process.env.BASE_URL,
   routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: Home
-    },
     {
       path: '/about',
       name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+      components: {
+        About : About
+      },
+      beforeEnter: (to, from, next) => {
+        console.log('触发about Component钩子')
+        from: {path:'/'}
+        to: {path:'/about'}
+        next()
+      }
+    },
+    {
+      path: '/home',
+      name: 'home',
+      components: {
+        Home: Home
+      },
+      beforeEnter: (to, from, next) => {
+        console.log('触发home Component钩子')
+        from: {path:'/'}
+        to: {path:'/about'}
+        next()
+      }
     }
   ]
 })
+
+// Router.beforeEach((to, from, next) => {
+//   next()
+// })

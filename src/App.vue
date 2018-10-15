@@ -1,7 +1,13 @@
 <template>
   <div id="app">
-  
-    <!-- <h1>{{msg}}</h1> -->
+    <router-link to="/home">go to homePage</router-link>
+    <br>
+    <router-link to="/about">go to About-Component</router-link>
+    <br>
+    <!-- <router-link to="/home">go to Home-Component</router-link> -->
+    <router-view name="About"></router-view>
+    <router-view name="Home"></router-view>
+    
     <div class="frame">
       <h1>{{title}}</h1>
       <ul>
@@ -12,21 +18,19 @@
     </div>
 
     <hr>
-    
-    <div class="frame">
-      <Home msg="xiaoxi" @changeTitle="changeTitle" @input="input">
-        <!-- 插槽 -->
-        <h1 slot="header">头部插槽</h1>
-        <span>默认内容插槽</span>
-        <h3 slot="footer">底部插槽</h3>
-      </Home>
-    </div>
+    <input @input="$emit('input',$event.target.value)">
+    <br>  
+    <br>
+    <slot name="header"></slot>
+    <slot></slot>
+    <slot name="footer"></slot>
+    <br>
 
     <hr>
 
     <div class="frame">
       <h1>is在tab页切换中的使用</h1>
-      <!-- is在tab页切换中的使用 -->
+      
       <button class="tab1" @click="clickTab" data-role="Tab1">tab1</button>
       <button class="tab2" @click="clickTab" data-role="Tab2">tab2</button>
       <keep-alive>
@@ -78,7 +82,7 @@ export default {
     methods: {
       changeTitle (i) {
         this.title = '父组件 ' + i + 'times';
-        console.log(this.title);
+        // console.log(this.title);
       },
       input (e) {
         this.followSonInput = e;
@@ -88,8 +92,8 @@ export default {
       }
     },
     created () {
-      console.log([...this.arr,...this.arr1,...this.arr2])
-      console.log(Object.prototype.toString.call(...this.arr))
+      // console.log([...this.arr,...this.arr1,...this.arr2])
+      // console.log(Object.prototype.toString.call(...this.arr))
     },
     provide () {
       return {

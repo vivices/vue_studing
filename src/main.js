@@ -8,6 +8,15 @@ import store from './store'
 Vue.config.productionTip = false
 // Vue.use(ElementUI)
 
+router.beforeEach((to, from, next) => {
+  console.log('触发全局前置钩子')
+  next()
+})
+
+router.afterEach((to, from) => {
+  console.log('触发全局后置钩子')
+})
+
 new Vue({
   router,
   store,
